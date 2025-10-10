@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Elegant Sarees</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* About page specific styles */
+        .about-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/about-banner.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .about-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .breadcrumb a {
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .breadcrumb span {
+            margin: 0 10px;
+        }
+        
+        .about-section {
+            padding: 60px 0;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-image {
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .experience-badge {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 150px;
+            height: 150px;
+            background: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .experience-badge .years {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .experience-badge .text {
+            font-size: 16px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        
+        .about-text h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .signature {
+            margin-top: 30px;
+        }
+        
+        .signature img {
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        
+        .signature .name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .signature .position {
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .mission-vision {
+            background-color: #f9f9f9;
+            padding: 80px 0;
+        }
+        
+        .mission-vision-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .mission-box, .vision-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .mission-box h3, .vision-box h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mission-box h3 i, .vision-box h3 i {
+            margin-right: 15px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .mission-box p, .vision-box p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .team-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .team-member {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-image {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover .member-image img {
+            transform: scale(1.05);
+        }
+        
+        .member-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .member-info h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .member-info p {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .member-social a {
+            width: 36px;
+            height: 36px;
+            background: #f5f5f5;
+            color: #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .member-social a:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
+        
+        .journey-section {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            background-color: #fff;
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .right::after {
+            left: -12px;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: #fff;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .timeline-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .timeline-content .date {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .timeline-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .testimonial-section {
+            padding: 80px 0;
+        }
+        
+        @media (max-width: 992px) {
+            .about-content, .mission-vision-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .right {
+                left: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-header {
+                height: 200px;
+            }
+            
+            .about-header h1 {
+                font-size: 32px;
+            }
+            
+            .experience-badge {
+                width: 120px;
+                height: 120px;
+                bottom: -20px;
+                right: -20px;
+            }
+            
+            .experience-badge .years {
+                font-size: 36px;
+            }
+            
+            .experience-badge .text {
+                font-size: 14px;
+            }
+            
+            .about-text h2 {
+                font-size: 28px;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Elegant Sarees</h1>
+                </div>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Collection</a></li>
+                        <li><a href="about.html" class="active">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-icons">
+                    <a href="profile.html"><i class="fas fa-user"></i></a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                    <div class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Header Section -->
+    <section class="about-header">
+        <div class="container">
+            <h1>About Us</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="about.html">About Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="images/about-image.jpg" alt="About Elegant Sarees">
+                    <div class="experience-badge">
+                        <div class="years">13</div>
+                        <div class="text">Years of Excellence</div>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h2>Our Story of Passion and Tradition</h2>
+                    <p>Founded in 2010, Elegant Sarees began as a small family-owned boutique in the heart of textile city. What started as a passion project by our founder, Priya Sharma, has now grown into one of India's most trusted online destinations for premium sarees.</p>
+                    <p>Our journey is rooted in a deep appreciation for India's rich textile heritage and a commitment to bringing the finest handcrafted sarees to women around the world. Each saree in our collection tells a story of skilled artisans, ancient techniques, and cultural significance.</p>
+                    <p>At Elegant Sarees, we believe that a saree is more than just a garment—it's a celebration of tradition, craftsmanship, and timeless elegance. Our mission is to preserve and promote India's textile legacy while making it accessible to the modern woman.</p>
+                    <div class="signature">
+                        <img src="images/signature.png" alt="Signature">
+                        <div class="name">Priya Sharma</div>
+                        <div class="position">Founder & CEO</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="mission-vision">
+        <div class="container">
+            <div class="mission-vision-content">
+                <div class="mission-box">
+                    <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+                    <p>To preserve and celebrate India's rich textile heritage by curating the finest handcrafted sarees and making them accessible to women worldwide through a seamless online shopping experience.</p>
+                    <p>We are committed to supporting traditional artisans and weaving communities by providing them fair compensation and sustainable livelihoods, ensuring that ancient crafts continue to thrive in the modern world.</p>
+                </div>
+                <div class="vision-box">
+                    <h3><i class="fas fa-eye"></i> Our Vision</h3>
+                    <p>To become the global ambassador of Indian sarees, recognized for our uncompromising quality, authentic craftsmanship, and customer-centric approach.</p>
+                    <p>We envision a world where the art of saree weaving is cherished and preserved, where every woman can experience the elegance and cultural richness of a handcrafted Indian saree, regardless of where she lives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Meet Our Team</h2>
+                <p>The passionate individuals behind Elegant Sarees who work tirelessly to bring you the finest collection of traditional and contemporary sarees.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="images/team1.jpg" alt="Team Member">
+                    </div>
+                    <div class="member-info">
+                        <h3>Priya Sharma</h3>
+                        <p>Founder & CEO</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="images/team2.jpg" alt="Team Member">
+                    </div>
+                    <div class="member-info">
+                        <h3>Rajesh Kumar</h3>
+                        <p>Creative Director</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="images/team3.jpg" alt="Team Member">
+                    </div>
+                    <div class="member-info">
+                        <h3>Ananya Patel</h3>
+                        <p>Head of Curation</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="images/team4.jpg" alt="Team Member">
+                    </div>
+                    <div class="member-info">
+                        <h3>Vikram Singh</h3>
+                        <p>Operations Manager</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section class="journey-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Journey</h2>
+                <p>From a small boutique to a leading online saree destination, here's how our story unfolded.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">2010</span>
+                        <h3>The Beginning</h3>
+                        <p>Elegant Sarees was founded as a small boutique in Textile City with a collection of 50 handpicked sarees from various regions of India.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="date">2013</span>
+                        <h3>Expanding Horizons</h3>
+                        <p>Opened our second physical store and began collaborating directly with weaving communities across India to source authentic handloom sarees.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">2015</span>
+                        <h3>Digital Transformation</h3>
+                        <p>Launched our e-commerce platform, making our curated collection available to customers nationwide with personalized shopping assistance.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="date">2018</span>
+                        <h3>Global Presence</h3>
+                        <p>Expanded our operations to serve international customers, shipping to over 30 countries and introducing global audiences to India's textile heritage.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="date">2020</span>
+                        <h3>Artisan Support Initiative</h3>
+                        <p>Launched our artisan support program during the pandemic, providing financial assistance to weaving communities and ensuring sustainable livelihoods.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="date">2023</span>
+                        <h3>Present Day</h3>
+                        <p>Today, Elegant Sarees is a trusted name in the industry with over 10,000 unique designs, supporting 500+ artisans and serving customers in 50+ countries.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Customers Say</h2>
+                <p>The trust and satisfaction of our customers is what drives us to maintain our standards of excellence.</p>
+            </div>
+            <div class="testimonials">
+                <!-- Testimonial content from style.css -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Stay updated with our latest collections, exclusive offers, and styling tips.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your Email Address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <h2>Elegant Sarees</h2>
+                    </div>
+                    <p>Bringing the finest traditional and contemporary sarees to your doorstep since 2010.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Collection</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="profile.html">My Account</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion Street, Textile City, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@elegantsarees.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegant Sarees. All Rights Reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

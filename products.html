@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collection - Elegant Sarees</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles for products page */
+        .products-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/products-header.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-dropdown {
+            position: relative;
+        }
+        
+        .filter-btn {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .filter-dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            z-index: 10;
+            display: none;
+        }
+        
+        .filter-dropdown-content.show {
+            display: block;
+        }
+        
+        .filter-dropdown-content a {
+            display: block;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .filter-dropdown-content a:hover {
+            background: #f9f9f9;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding: 10px 15px;
+            padding-right: 40px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 250px;
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #777;
+        }
+        
+        .product-grid {
+            margin-bottom: 40px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .pagination a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+        
+        .pagination a:hover, .pagination a.active {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Elegant Sarees</h1>
+                </div>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html" class="active">Collection</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-icons">
+                    <a href="login.html"><i class="fas fa-user"></i></a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                    <div class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Products Header -->
+    <section class="products-header">
+        <div class="container">
+            <h1>Our Collection</h1>
+            <p>Discover our exquisite range of handcrafted sarees</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <!-- Filter and Search -->
+            <div class="filter-container">
+                <div class="filter-options">
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="categoryFilter">
+                            Category <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-dropdown-content" id="categoryDropdown">
+                <a href="#" data-category="all">All Categories</a>
+                <a href="#" data-category="silk">Silk Sarees</a>
+                <a href="#" data-category="cotton">Cotton Sarees</a>
+                <a href="#" data-category="cotton-dress">Cotton Dresses</a>
+                <a href="#" data-category="party-wear">Party Wear</a>
+                <a href="#" data-category="maxi-dress">Maxi Dresses</a>
+                <a href="#" data-category="kurthi">Kurthi Sets</a>
+                <a href="#" data-category="chudidar">Chudidar</a>
+                <a href="#" data-category="dupatta">Dupattas</a>
+                <a href="#" data-category="designer">Designer Sarees</a>
+                <a href="#" data-category="bridal">Bridal Collection</a>
+            </div>
+                    </div>
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="priceFilter">
+                            Price <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-dropdown-content" id="priceDropdown">
+                            <a href="#" data-price="all">All Prices</a>
+                            <a href="#" data-price="0-5000">Under ₹5,000</a>
+                            <a href="#" data-price="5000-10000">₹5,000 - ₹10,000</a>
+                            <a href="#" data-price="10000-20000">₹10,000 - ₹20,000</a>
+                            <a href="#" data-price="20000+">Above ₹20,000</a>
+                        </div>
+                    </div>
+                    <div class="filter-dropdown">
+                        <button class="filter-btn" id="sortFilter">
+                            Sort By <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-dropdown-content" id="sortDropdown">
+                            <a href="#" data-sort="featured">Featured</a>
+                            <a href="#" data-sort="price-low">Price: Low to High</a>
+                            <a href="#" data-sort="price-high">Price: High to Low</a>
+                            <a href="#" data-sort="newest">Newest First</a>
+                            <a href="#" data-sort="popular">Most Popular</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search sarees...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card" data-category="silk" data-price="12999">
+                    <div class="product-image">
+                        <img src="images/saree1.jpg" alt="Silk Saree">
+                        <div class="product-tag">New</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="1"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="1"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Kanchipuram Silk Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹12,999</span>
+                            <span class="original-price">₹15,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(24)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-category="silk" data-price="9499">
+                    <div class="product-image">
+                        <img src="images/saree2.jpg" alt="Banarasi Saree">
+                        <div class="product-tag">Bestseller</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="2"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="2"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Banarasi Silk Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹9,499</span>
+                            <span class="original-price">₹11,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(42)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-category="cotton" data-price="3999">
+                    <div class="product-image">
+                        <img src="images/saree3.jpg" alt="Cotton Saree">
+                        <div class="product-tag">Sale</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="3"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="3"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Handloom Cotton Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹3,999</span>
+                            <span class="original-price">₹5,499</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>(18)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-category="designer" data-price="7999">
+                    <div class="product-image">
+                        <img src="images/saree4.jpg" alt="Designer Saree">
+                        <div class="product-tag">Limited</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="4"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="4"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Designer Georgette Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹7,999</span>
+                            <span class="original-price">₹9,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(36)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-category="bridal" data-price="24999">
+                    <div class="product-image">
+                        <img src="images/saree5.jpg" alt="Bridal Saree">
+                        <div class="product-tag">Premium</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="5"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="5"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Bridal Silk Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹24,999</span>
+                            <span class="original-price">₹29,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(52)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-category="cotton" data-price="4599">
+                    <div class="product-image">
+                        <img src="images/saree6.jpg" alt="Linen Saree">
+                        <div class="product-tag">New</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="6"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="6"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Linen Cotton Blend Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹4,599</span>
+                            <span class="original-price">₹5,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(29)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 7 -->
+                <div class="product-card" data-category="designer" data-price="8999">
+                    <div class="product-image">
+                        <img src="images/saree7.jpg" alt="Party Wear Saree">
+                        <div class="product-tag">Trending</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="7"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="7"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Party Wear Designer Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹8,999</span>
+                            <span class="original-price">₹10,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(38)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card" data-category="silk" data-price="15999">
+                    <div class="product-image">
+                        <img src="images/saree8.jpg" alt="Patola Silk Saree">
+                        <div class="product-tag">Handcrafted</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="8"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="8"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Patola Silk Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹15,999</span>
+                            <span class="original-price">₹18,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(31)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Stay updated with our latest collections and exclusive offers</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <h2>Elegant Sarees</h2>
+                    </div>
+                    <p>Bringing the finest traditional and contemporary sarees to your doorstep since 2010.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Collection</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion Street, Textile City, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@elegantsarees.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegant Sarees. All Rights Reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Quick View Modal -->
+    <div class="modal" id="quickViewModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="product-quick-view">
+                <div class="product-quick-image">
+                    <img src="" alt="Product Image" id="modalProductImage">
+                </div>
+                <div class="product-quick-details">
+                    <h2 id="modalProductTitle"></h2>
+                    <div class="product-quick-price">
+                        <span class="current-price" id="modalCurrentPrice"></span>
+                        <span class="original-price" id="modalOriginalPrice"></span>
+                    </div>
+                    <div class="product-quick-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span id="modalRatingCount"></span>
+                    </div>
+                    <div class="product-quick-description">
+                        <p id="modalProductDescription"></p>
+                    </div>
+                    <div class="product-quick-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1" class="quantity-input">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="btn add-to-cart-btn" id="modalAddToCart">Add to Cart</button>
+                    </div>
+                    <div class="product-meta">
+                        <p><strong>SKU:</strong> <span id="modalSku"></span></p>
+                        <p><strong>Category:</strong> <span id="modalCategory"></span></p>
+                        <p><strong>Tags:</strong> <span id="modalTags"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Filter Dropdowns
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const dropdownId = this.id.replace('Filter', 'Dropdown');
+                const dropdown = document.getElementById(dropdownId);
+                
+                // Close all other dropdowns
+                document.querySelectorAll('.filter-dropdown-content').forEach(dd => {
+                    if (dd.id !== dropdownId) {
+                        dd.classList.remove('show');
+                    }
+                });
+                
+                // Toggle current dropdown
+                dropdown.classList.toggle('show');
+            });
+        });
+        
+        // Close dropdowns when clicking outside
+        window.addEventListener('click', function(event) {
+            if (!event.target.matches('.filter-btn') && !event.target.matches('.fas')) {
+                document.querySelectorAll('.filter-dropdown-content').forEach(dd => {
+                    dd.classList.remove('show');
+                });
+            }
+        });
+        
+        // Category Filter
+        const categoryLinks = document.querySelectorAll('#categoryDropdown a');
+        
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.getAttribute('data-category');
+                
+                // Update button text
+                document.getElementById('categoryFilter').innerHTML = 
+                    this.textContent + ' <i class="fas fa-chevron-down"></i>';
+                
+                // Filter products
+                filterProducts();
+                
+                // Close dropdown
+                document.getElementById('categoryDropdown').classList.remove('show');
+                
+                // Update URL with the selected category
+                const url = new URL(window.location);
+                if (category === 'all') {
+                    url.searchParams.delete('category');
+                } else {
+                    url.searchParams.set('category', category);
+                }
+                window.history.pushState({}, '', url);
+            });
+        });
+        
+        // Price Filter
+        const priceLinks = document.querySelectorAll('#priceDropdown a');
+        
+        priceLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const price = this.getAttribute('data-price');
+                
+                // Update button text
+                document.getElementById('priceFilter').innerHTML = 
+                    this.textContent + ' <i class="fas fa-chevron-down"></i>';
+                
+                // Filter products
+                filterProducts();
+                
+                // Close dropdown
+                document.getElementById('priceDropdown').classList.remove('show');
+            });
+        });
+        
+        // Sort Filter
+        const sortLinks = document.querySelectorAll('#sortDropdown a');
+        
+        sortLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sort = this.getAttribute('data-sort');
+                
+                // Update button text
+                document.getElementById('sortFilter').innerHTML = 
+                    this.textContent + ' <i class="fas fa-chevron-down"></i>';
+                
+                // Sort products
+                sortProducts(sort);
+                
+                // Close dropdown
+                document.getElementById('sortDropdown').classList.remove('show');
+            });
+        });
+        
+        // Search functionality
+        const searchInput = document.querySelector('.search-box input');
+        const searchButton = document.querySelector('.search-box button');
+        
+        searchButton.addEventListener('click', function() {
+            filterProducts();
+        });
+        
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                filterProducts();
+            }
+        });
+        
+        // Auto-filtering based on URL parameter
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            
+            if (categoryParam) {
+                // Find the matching category link
+                const categoryLinks = document.querySelectorAll('#categoryDropdown a');
+                categoryLinks.forEach(link => {
+                    if (link.getAttribute('data-category') === categoryParam) {
+                        // Update the button text
+                        document.getElementById('categoryFilter').innerHTML = 
+                            link.textContent + ' <i class="fas fa-chevron-down"></i>';
+                    }
+                });
+                
+                // Apply the filter
+                filterProducts();
+            }
+        });
+        
+        // Filter products function
+        function filterProducts() {
+            const category = document.getElementById('categoryFilter').textContent.trim().split(' ')[0].toLowerCase();
+            const price = document.getElementById('priceFilter').textContent.trim().split(' ')[0].toLowerCase();
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            const products = document.querySelectorAll('.product-card');
+            
+            products.forEach(product => {
+                let showProduct = true;
+                
+                // Category filter
+                if (category !== 'all' && category !== 'category') {
+                    const productCategory = product.getAttribute('data-category');
+                    if (productCategory !== category) {
+                        showProduct = false;
+                    }
+                }
+                
+                // Price filter
+                if (price !== 'all' && price !== 'price') {
+                    const productPrice = parseInt(product.getAttribute('data-price'));
+                    
+                    if (price === 'under') {
+                        if (productPrice >= 5000) showProduct = false;
+                    } else if (price === '₹5,000') {
+                        if (productPrice < 5000 || productPrice >= 10000) showProduct = false;
+                    } else if (price === '₹10,000') {
+                        if (productPrice < 10000 || productPrice >= 20000) showProduct = false;
+                    } else if (price === 'above') {
+                        if (productPrice < 20000) showProduct = false;
+                    }
+                }
+                
+                // Search filter
+                if (searchTerm !== '') {
+                    const productName = product.querySelector('h3').textContent.toLowerCase();
+                    if (!productName.includes(searchTerm)) {
+                        showProduct = false;
+                    }
+                }
+                
+                // Show or hide product
+                if (showProduct) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+        
+        // Sort products function
+        function sortProducts(sortBy) {
+            const productGrid = document.querySelector('.product-grid');
+            const products = Array.from(document.querySelectorAll('.product-card'));
+            
+            products.sort((a, b) => {
+                if (sortBy === 'price-low') {
+                    const priceA = parseInt(a.getAttribute('data-price'));
+                    const priceB = parseInt(b.getAttribute('data-price'));
+                    return priceA - priceB;
+                } else if (sortBy === 'price-high') {
+                    const priceA = parseInt(a.getAttribute('data-price'));
+                    const priceB = parseInt(b.getAttribute('data-price'));
+                    return priceB - priceA;
+                }
+                
+                // Default to featured
+                return 0;
+            });
+            
+            // Clear and re-append sorted products
+            productGrid.innerHTML = '';
+            products.forEach(product => {
+                productGrid.appendChild(product);
+            });
+        }
+        
+        // Make product cards clickable
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.style.cursor = 'pointer';
+            
+            card.addEventListener('click', function(e) {
+                // Don't trigger if clicking on a button inside the card
+                if (e.target.closest('.product-actions') || e.target.closest('button')) {
+                    return;
+                }
+                
+                // Trigger quick view functionality
+                const quickViewBtn = this.querySelector('.quick-view');
+                if (quickViewBtn) {
+                    quickViewBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

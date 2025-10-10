@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Sarees - Premium Saree Collection</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Elegant Sarees</h1>
+                </div>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li class="dropdown">
+                            <a href="products.html">Collection <i class="fas fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="products.html?category=saree">Sarees</a></li>
+                                <li><a href="products.html?category=cotton-dress">Cotton Dresses</a></li>
+                                <li><a href="products.html?category=party-wear">Party Wear</a></li>
+                                <li><a href="products.html?category=maxi-dress">Maxi Dresses</a></li>
+                                <li><a href="products.html?category=kurthi">Kurthi Sets</a></li>
+                                <li><a href="products.html?category=chudidar">Chudidar</a></li>
+                                <li><a href="products.html?category=dupatta">Dupattas</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-icons">
+                    <a href="login.html"><i class="fas fa-user"></i></a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                    <div class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Exquisite Saree Collection</h2>
+                <p>Discover the perfect blend of tradition and elegance</p>
+                <a href="products.html" class="btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Collection</h2>
+                <p>Handpicked designs for every occasion</p>
+            </div>
+            <div class="product-grid">
+                <div class="product-card" onclick="document.querySelector('.quick-view[data-id=\'1\']').click()">
+                    <div class="product-image">
+                        <img src="images/saree1.jpg" alt="Silk Saree">
+                        <div class="product-tag">New</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="1" onclick="event.stopPropagation()"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="1" onclick="event.stopPropagation()"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Kanchipuram Silk Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹12,999</span>
+                            <span class="original-price">₹15,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(24)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="document.querySelector('.quick-view[data-id=\'2\']').click()">
+                    <div class="product-image">
+                        <img src="images/saree2.jpg" alt="Banarasi Saree">
+                        <div class="product-tag">Bestseller</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="2" onclick="event.stopPropagation()"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="2" onclick="event.stopPropagation()"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Banarasi Silk Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹9,499</span>
+                            <span class="original-price">₹11,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(42)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="document.querySelector('.quick-view[data-id=\'3\']').click()">
+                    <div class="product-image">
+                        <img src="images/saree3.jpg" alt="Cotton Saree">
+                        <div class="product-tag">Sale</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="3" onclick="event.stopPropagation()"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="3" onclick="event.stopPropagation()"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Handloom Cotton Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹3,999</span>
+                            <span class="original-price">₹5,499</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>(18)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="document.querySelector('.quick-view[data-id=\'4\']').click()">
+                    <div class="product-image">
+                        <img src="images/saree4.jpg" alt="Designer Saree">
+                        <div class="product-tag">Limited</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="4" onclick="event.stopPropagation()"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="quick-view" data-id="4" onclick="event.stopPropagation()"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Designer Georgette Saree</h3>
+                        <div class="product-price">
+                            <span class="current-price">₹7,999</span>
+                            <span class="original-price">₹9,999</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(36)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all">
+                <a href="products.html" class="btn btn-outline">View All Collection</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+<section class="categories">
+    <div class="container">
+        <div class="section-title">
+            <h2>Shop By Category</h2>
+            <p>Find the perfect outfit for every occasion</p>
+        </div>
+        <div class="category-grid">
+            <div class="category-card" onclick="window.location.href='products.html?category=silk'">
+                <img src="images/category1.jpg" alt="Silk Sarees">
+                <div class="category-info">
+                    <h3>Silk Sarees</h3>
+                    <a href="products.html?category=silk" class="btn btn-sm">Explore</a>
+                </div>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=cotton'">
+                <img src="images/category2.jpg" alt="Cotton Sarees">
+                <div class="category-info">
+                    <h3>Cotton Sarees</h3>
+                    <a href="products.html?category=cotton" class="btn btn-sm">Explore</a>
+                </div>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=cotton-dress'">
+                <img src="images/cotton-dress.jpg" alt="Cotton Dresses">
+                <div class="category-info">
+                    <h3>Cotton Dresses</h3>
+                    <a href="products.html?category=cotton-dress" class="btn btn-sm">Explore</a>
+                </div>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=party-wear'">
+                <img src="images/party-wear.jpg" alt="Party Wear">
+                <div class="category-info">
+                    <h3>Party Wear</h3>
+                    <a href="products.html?category=party-wear" class="btn btn-sm">Explore</a>
+                </div>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=maxi-dress'">
+                <img src="images/maxi-dress.jpg" alt="Maxi Dresses">
+                <div class="category-info">
+                    <h3>Maxi Dresses</h3>
+                    <a href="products.html?category=maxi-dress" class="btn btn-sm">Explore</a>
+                </div>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=kurthi'">
+                <img src="images/kurthi.jpg" alt="Kurthi Sets">
+                <div class="category-info">
+                    <h3>Kurthi - 2 & 3 Piece</h3>
+                    <a href="products.html?category=kurthi" class="btn btn-sm">Explore</a>
+                </div>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=chudidar'">
+                <img src="images/chudidar.jpg" alt="Chudidar">
+                <div class="category-info">
+                    <h3>Chudidar</h3>
+                    <a href="products.html?category=chudidar" class="btn btn-sm">Explore</a>
+                </div>
+            </div>
+            <div class="category-card" onclick="window.location.href='products.html?category=dupatta'">
+                <img src="images/dupatta.jpg" alt="Dupattas">
+                <div class="category-info">
+                    <h3>Dupattas</h3>
+                    <a href="products.html?category=dupatta" class="btn btn-sm">Explore</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Customer Love</h2>
+                <p>What our customers say about us</p>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The quality of the silk saree I purchased exceeded my expectations. The colors are vibrant and the craftsmanship is exceptional. Will definitely shop again!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/customer1.jpg" alt="Customer">
+                        <div class="author-info">
+                            <h4>Priya Sharma</h4>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"I ordered a Banarasi saree for my wedding and it arrived exactly as shown in the pictures. The customer service was excellent and delivery was prompt."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="images/customer2.jpg" alt="Customer">
+                        <div class="author-info">
+                            <h4>Anjali Patel</h4>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Stay updated with our latest collections and exclusive offers</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <h2>Elegant Sarees</h2>
+                    </div>
+                    <p>Bringing the finest traditional and contemporary sarees to your doorstep since 2010.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Collection</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion Street, Textile City, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@elegantsarees.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegant Sarees. All Rights Reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Quick View Modal -->
+    <div class="modal" id="quickViewModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="product-quick-view">
+                <div class="product-quick-image">
+                    <img src="" alt="Product Image" id="modalProductImage">
+                </div>
+                <div class="product-quick-details">
+                    <h2 id="modalProductTitle"></h2>
+                    <div class="product-quick-price">
+                        <span class="current-price" id="modalCurrentPrice"></span>
+                        <span class="original-price" id="modalOriginalPrice"></span>
+                    </div>
+                    <div class="product-quick-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span id="modalRatingCount"></span>
+                    </div>
+                    <div class="product-quick-description">
+                        <p id="modalProductDescription"></p>
+                    </div>
+                    <div class="product-quick-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1" class="quantity-input">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="btn add-to-cart-btn" id="modalAddToCart">Add to Cart</button>
+                    </div>
+                    <div class="product-meta">
+                        <p><strong>SKU:</strong> <span id="modalSku"></span></p>
+                        <p><strong>Category:</strong> <span id="modalCategory"></span></p>
+                        <p><strong>Tags:</strong> <span id="modalTags"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

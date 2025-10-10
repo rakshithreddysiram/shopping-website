@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Elegant Sarees</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styles for product detail page */
+        .product-detail-container {
+            padding: 60px 0;
+        }
+        
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .product-images {
+            position: relative;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 500px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .main-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .thumbnail-container {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .thumbnail.active {
+            border-color: var(--primary-color);
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .product-price {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .product-price .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 18px;
+            margin-left: 10px;
+            font-weight: 400;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .stars {
+            color: #FFD700;
+            margin-right: 10px;
+        }
+        
+        .review-count {
+            color: #777;
+        }
+        
+        .product-description {
+            margin-bottom: 30px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .product-meta {
+            margin-bottom: 30px;
+        }
+        
+        .meta-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .meta-label {
+            width: 120px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .meta-value {
+            color: #777;
+        }
+        
+        .product-colors {
+            margin-bottom: 25px;
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        .color-option.active {
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            border: 1px solid #ddd;
+            text-align: center;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .add-to-cart-btn {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+        }
+        
+        .wishlist-btn {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-btn:hover {
+            background: #f9f9f9;
+        }
+        
+        .wishlist-btn i {
+            color: #777;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-btn:hover i {
+            color: var(--danger-color);
+        }
+        
+        .product-share {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .share-label {
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .facebook {
+            background: #3b5998;
+        }
+        
+        .twitter {
+            background: #1da1f2;
+        }
+        
+        .pinterest {
+            background: #bd081c;
+        }
+        
+        .whatsapp {
+            background: #25d366;
+        }
+        
+        .share-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+        }
+        
+        .product-tabs {
+            margin-top: 60px;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 30px;
+        }
+        
+        .tab-btn {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 16px;
+            font-weight: 500;
+            color: #777;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .specifications-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .spec-item {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .spec-name {
+            width: 150px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .spec-value {
+            color: #777;
+        }
+        
+        .review {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .reviewer-name {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .review-date {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .review-rating {
+            margin-bottom: 10px;
+        }
+        
+        .review-text {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .related-products {
+            margin-top: 80px;
+        }
+        
+        .related-products h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 28px;
+            color: #333;
+        }
+        
+        .related-products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        @media (max-width: 992px) {
+            .related-products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+            
+            .related-products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .specifications-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .related-products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+            
+            .wishlist-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Elegant Sarees</h1>
+                </div>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Collection</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-icons">
+                    <a href="login.html"><i class="fas fa-user"></i></a>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                    <div class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail-container">
+        <div class="container">
+            <div class="product-detail" id="productDetail">
+                <!-- Product content will be dynamically loaded here -->
+            </div>
+
+            <!-- Product Tabs -->
+            <div class="product-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="description">Description</button>
+                    <button class="tab-btn" data-tab="specifications">Specifications</button>
+                    <button class="tab-btn" data-tab="reviews">Reviews</button>
+                    <button class="tab-btn" data-tab="shipping">Shipping & Returns</button>
+                </div>
+
+                <div class="tab-content active" id="description">
+                    <p>This exquisite Banarasi silk saree is a masterpiece of traditional Indian craftsmanship. Handwoven by skilled artisans in Varanasi, this saree features intricate zari work with gold and silver threads that create stunning motifs across the fabric.</p>
+                    <p>The rich color palette and luxurious texture make this saree perfect for weddings, festivals, and special occasions. The contrast border and pallu add an extra dimension of elegance to this already magnificent piece.</p>
+                    <p>Each saree is unique, with slight variations that highlight its handcrafted nature. The saree comes with a matching blouse piece, allowing you to create a coordinated ensemble.</p>
+                    <p>Drape yourself in this Banarasi silk saree to experience the timeless elegance and cultural heritage of India. It's not just a garment; it's a work of art that can be treasured for generations.</p>
+                </div>
+
+                <div class="tab-content" id="specifications">
+                    <div class="specifications-list">
+                        <div class="spec-item">
+                            <div class="spec-name">Material</div>
+                            <div class="spec-value">Pure Silk</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-name">Weave Type</div>
+                            <div class="spec-value">Handloom</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-name">Length</div>
+                            <div class="spec-value">5.5 meters (with blouse piece)</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-name">Width</div>
+                            <div class="spec-value">45 inches</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-name">Blouse Piece</div>
+                            <div class="spec-value">Yes (0.8 meters)</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-name">Wash Care</div>
+                            <div class="spec-value">Dry Clean Only</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-name">Occasion</div>
+                            <div class="spec-value">Wedding, Festival, Ceremony</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-name">Border</div>
+                            <div class="spec-value">Zari Work</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-name">Pattern</div>
+                            <div class="spec-value">Traditional Motifs</div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-name">Transparency</div>
+                            <div class="spec-value">Opaque</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="reviews">
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="reviewer-name">Priya Sharma</div>
+                            <div class="review-date">15 May 2023</div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="review-text">
+                            <p>I purchased this saree for my daughter's wedding and it exceeded all my expectations. The quality of the silk is exceptional, and the zari work is absolutely stunning. The color is even more beautiful in person than in the photos. I received so many compliments! Highly recommend this saree for special occasions.</p>
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="reviewer-name">Anjali Patel</div>
+                            <div class="review-date">3 April 2023</div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="review-text">
+                            <p>Beautiful saree with excellent craftsmanship. The silk is soft and the design is intricate. The only reason I'm giving 4 stars instead of 5 is that the blouse piece was slightly smaller than expected. Otherwise, it's a gorgeous piece that I'll treasure for years to come.</p>
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="reviewer-name">Meera Reddy</div>
+                            <div class="review-date">18 February 2023</div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="review-text">
+                            <p>This Banarasi saree is a work of art! The color is rich and vibrant, and the zari work is detailed and beautiful. The silk is of high quality and has a lovely sheen. Delivery was prompt and the saree was well-packaged. I'm very satisfied with my purchase and will definitely buy from this store again.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="shipping">
+                    <h3>Shipping Information</h3>
+                    <p>We ship to all locations across India and to select international destinations. Domestic orders are typically delivered within 3-5 business days, while international orders may take 7-14 business days depending on the destination.</p>
+                    <p>All orders are carefully packaged to ensure that your saree reaches you in perfect condition. We use acid-free tissue paper and sturdy boxes to protect the delicate fabric during transit.</p>
+                    
+                    <h3>Return Policy</h3>
+                    <p>We accept returns within 7 days of delivery if the product is unused, unworn, and in its original packaging with all tags attached. Please note that customized orders cannot be returned unless there is a manufacturing defect.</p>
+                    <p>In case of damaged or defective items, please contact our customer service team within 48 hours of receiving the product. We will arrange for a replacement or refund based on the condition of the item.</p>
+                    
+                    <h3>Refund Process</h3>
+                    <p>Once we receive and inspect the returned item, we will process your refund within 7-10 business days. The refund will be credited to your original payment method.</p>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <div class="related-products">
+                <h2>You May Also Like</h2>
+                <div class="related-products-grid" id="relatedProducts">
+                    <!-- Related products will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <h2>Elegant Sarees</h2>
+                    </div>
+                    <p>Bringing the finest traditional and contemporary sarees to your doorstep since 2010.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Collection</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion Street, Textile City, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@elegantsarees.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Elegant Sarees. All Rights Reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get product ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id')) || 1; // Default to product 1 if no ID provided
+            
+            // Load product details
+            loadProductDetails(productId);
+            
+            // Load related products
+            loadRelatedProducts(productId);
+            
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to current button and content
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+        
+        // Load product details
+        function loadProductDetails(productId) {
+            // In a real application, you would fetch this data from a server
+            // For now, we'll use the products array from script.js
+            const product = products.find(p => p.id === productId) || products[0];
+            
+            const productDetailContainer = document.getElementById('productDetail');
+            
+            // Create product images HTML
+            const imagesHTML = `
+                <div class="product-images">
+                    <div class="main-image">
+                        <img src="${product.image}" alt="${product.name}" id="mainImage">
+                    </div>
+                    <div class="thumbnail-container">
+                        <div class="thumbnail active" data-image="${product.image}">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        <div class="thumbnail" data-image="${product.image.replace('.jpg', '-2.jpg')}">
+                            <img src="${product.image.replace('.jpg', '-2.jpg')}" alt="${product.name}">
+                        </div>
+                        <div class="thumbnail" data-image="${product.image.replace('.jpg', '-3.jpg')}">
+                            <img src="${product.image.replace('.jpg', '-3.jpg')}" alt="${product.name}">
+                        </div>
+                        <div class="thumbnail" data-image="${product.image.replace('.jpg', '-4.jpg')}">
+                            <img src="${product.image.replace('.jpg', '-4.jpg')}" alt="${product.name}">
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Create product info HTML
+            const infoHTML = `
+                <div class="product-info">
+                    <h1>${product.name}</h1>
+                    <div class="product-price">
+                        ${product.price} <span class="original-price">₹${(parseFloat(product.price.replace(/[^\d.]/g, '')) * 1.2).toLocaleString()}</span>
+                    </div>
+                    <div class="product-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="review-count">4.5 (36 reviews)</span>
+                    </div>
+                    <div class="product-description">
+                        <p>${product.description || 'This exquisite saree is a masterpiece of traditional Indian craftsmanship. Handwoven by skilled artisans, this saree features intricate work that creates stunning motifs across the fabric.'}</p>
+                    </div>
+                    <div class="product-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">SKU:</div>
+                            <div class="meta-value">${product.id < 10 ? 'SK-100' + product.id : 'SK-10' + product.id}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Category:</div>
+                            <div class="meta-value">${product.category}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Availability:</div>
+                            <div class="meta-value">In Stock</div>
+                        </div>
+                    </div>
+                    <div class="product-colors">
+                        <h3>Available Colors</h3>
+                        <div class="color-options">
+                            <div class="color-option active" style="background-color: ${getColorFromName(product.name)};"></div>
+                            <div class="color-option" style="background-color: #8B0000;"></div>
+                            <div class="color-option" style="background-color: #006400;"></div>
+                            <div class="color-option" style="background-color: #000080;"></div>
+                        </div>
+                    </div>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn decrease-qty"><i class="fas fa-minus"></i></button>
+                        <input type="number" class="quantity-input" value="1" min="1" id="productQuantity">
+                        <button class="quantity-btn increase-qty"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn add-to-cart-btn" id="addToCartBtn" data-id="${product.id}">Add to Cart</button>
+                        <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="product-share">
+                        <span class="share-label">Share this product:</span>
+                        <div class="share-buttons">
+                            <a href="#" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="share-btn twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="share-btn pinterest"><i class="fab fa-pinterest-p"></i></a>
+                            <a href="#" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Combine and set HTML
+            productDetailContainer.innerHTML = imagesHTML + infoHTML;
+            
+            // Set page title
+            document.title = `${product.name} - Elegant Sarees`;
+            
+            // Add event listeners
+            setupProductDetailEvents(product);
+        }
+        
+        // Load related products
+        function loadRelatedProducts(currentProductId) {
+            const relatedProductsContainer = document.getElementById('relatedProducts');
+            
+            // Get 4 random products that are not the current product
+            const relatedProducts = products
+                .filter(product => product.id !== currentProductId)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 4);
+            
+            // Create HTML for related products
+            let relatedProductsHTML = '';
+            
+            relatedProducts.forEach(product => {
+                relatedProductsHTML += `
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div class="product-overlay">
+                                <a href="product-detail.html?id=${product.id}" class="view-btn"><i class="fas fa-eye"></i></a>
+                                <button class="cart-btn" data-id="${product.id}"><i class="fas fa-shopping-cart"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3><a href="product-detail.html?id=${product.id}">${product.name}</a></h3>
+                            <div class="product-price">${product.price}</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>(4.5)</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            relatedProductsContainer.innerHTML = relatedProductsHTML;
+            
+            // Add event listeners for related products
+            const cartButtons = relatedProductsContainer.querySelectorAll('.cart-btn');
+            cartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    const product = products.find(p => p.id === productId);
+                    
+                    if (product) {
+                        addToCart(product, 1);
+                    }
+                });
+            });
+        }
+        
+        // Setup event listeners for product detail page
+        function setupProductDetailEvents(product) {
+            // Thumbnail click event
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.getElementById('mainImage');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    // Remove active class from all thumbnails
+                    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                    
+                    // Add active class to clicked thumbnail
+                    this.classList.add('active');
+                    
+                    // Update main image
+                    const imageUrl = this.getAttribute('data-image');
+                    mainImage.src = imageUrl;
+                });
+            });
+            
+            // Color options click event
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove active class from all color options
+                    colorOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked color option
+                    this.classList.add('active');
+                });
+            });
+            
+            // Quantity buttons
+            const decreaseBtn = document.querySelector('.decrease-qty');
+            const increaseBtn = document.querySelector('.increase-qty');
+            const quantityInput = document.getElementById('productQuantity');
+            
+            decreaseBtn.addEventListener('click', function() {
+                let quantity = parseInt(quantityInput.value);
+                if (quantity > 1) {
+                    quantityInput.value = quantity - 1;
+                }
+            });
+            
+            increaseBtn.addEventListener('click', function() {
+                let quantity = parseInt(quantityInput.value);
+                quantityInput.value = quantity + 1;
+            });
+            
+            // Add to cart button
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            
+            addToCartBtn.addEventListener('click', function() {
+                const quantity = parseInt(quantityInput.value);
+                addToCart(product, quantity);
+            });
+            
+            // Wishlist button
+            const wishlistBtn = document.querySelector('.wishlist-btn');
+            
+            wishlistBtn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = 'var(--danger-color)';
+                    showNotification('Added to wishlist!');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '#777';
+                    showNotification('Removed from wishlist!');
+                }
+            });
+            
+            // Share buttons
+            const shareButtons = document.querySelectorAll('.share-btn');
+            
+            shareButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showNotification('Sharing functionality will be implemented in the future.');
+                });
+            });
+        }
+        
+        // Helper function to get color from product name
+        function getColorFromName(name) {
+            const colorMap = {
+                'Red': '#FF0000',
+                'Pink': '#FFC0CB',
+                'Blue': '#0000FF',
+                'Green': '#008000',
+                'Yellow': '#FFFF00',
+                'Purple': '#800080',
+                'Orange': '#FFA500',
+                'Black': '#000000',
+                'White': '#FFFFFF',
+                'Gold': '#FFD700',
+                'Silver': '#C0C0C0',
+                'Maroon': '#800000',
+                'Navy': '#000080',
+                'Teal': '#008080'
+            };
+            
+            for (const color in colorMap) {
+                if (name.includes(color)) {
+                    return colorMap[color];
+                }
+            }
+            
+            // Default color if no match found
+            return '#A52A2A'; // Brown as default for sarees
+        }
+    </script>
+</body>
+</html>
