@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Order - Elegant Sarees</title>
+    <link rel="stylesheet" href="e-commers/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trackingForm = document.getElementById('trackingForm');
+            
+            if (trackingForm) {
+                trackingForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const orderId = document.getElementById('orderId').value;
+                    const email = document.getElementById('email').value;
+                    const trackingResult = document.getElementById('trackingResult');
+                    const trackingTimeline = document.getElementById('trackingTimeline');
+                    const orderItems = document.getElementById('orderItems');
+                    const shippingAddress = document.getElementById('shippingAddress');
+                    const errorMessage = document.getElementById('errorMessage');
+                    
+                    try {
+                        // Show loading state
+                        trackingResult.style.display = 'block';
+                        trackingTimeline.innerHTML = '<div class="loading">Loading tracking information...</div>';
+                        
+                        // Call tracking API
+                        const response = await fetch(`${API_URL}/tracking`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ orderId, email }),
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            // Hide error message if visible
+                            errorMessage.style.display = 'none';
+                            
+                            // Display tracking information
+                            const order = data.order;
+                            
+                            // Update tracking timeline
+                            trackingTimeline.innerHTML = '';
+                            
+                            // Add tracking events
+                            const events = [
+                                { status: 'placed', title: 'Order Placed', date: new Date(order.createdAt).toLocaleString() },
+                                { status: 'processing', title: 'Processing', date: order.processingAt ? new Date(order.processingAt).toLocaleString() : '' },
+                                { status: 'shipped', title: 'Shipped', date: order.shippedAt ? new Date(order.shippedAt).toLocaleString() : '' },
+                                { status: 'out_for_delivery', title: 'Out for Delivery', date: order.outForDeliveryAt ? new Date(order.outForDeliveryAt).toLocaleString() : '' },
+                                { status: 'delivered', title: 'Delivered', date: order.deliveredAt ? new Date(order.deliveredAt).toLocaleString() : '' }
+                            ];
+                            
+                            // Determine current status
+                            const currentStatus = order.status;
+                            
+                            // Create timeline events
+                            events.forEach(event => {
+                                const isActive = currentStatus === event.status || 
+                                    (currentStatus === 'delivered' && event.status !== 'delivered') ||
+                                    (currentStatus === 'out_for_delivery' && ['placed', 'processing', 'shipped'].includes(event.status)) ||
+                                    (currentStatus === 'shipped' && ['placed', 'processing'].includes(event.status)) ||
+                                    (currentStatus === 'processing' && event.status === 'placed');
+                                
+                                if (event.date) {
+                                    const eventElement = document.createElement('div');
+                                    eventElement.className = `tracking-event ${isActive ? 'active' : ''}`;
+                                    eventElement.innerHTML = `
+                                        <div class="tracking-event-date">${event.date}</div>
+                                        <div class="tracking-event-title">${event.title}</div>
+                                        <div class="tracking-event-desc">${getEventDescription(event.status, order)}</div>
+                                    `;
+                                    trackingTimeline.appendChild(eventElement);
+                                }
+                            });
+                            
+                            // Display order items
+                            orderItems.innerHTML = '';
+                            order.orderItems.forEach(item => {
+                                const itemElement = document.createElement('div');
+                                itemElement.className = 'order-item';
+                                itemElement.innerHTML = `
+                                    <div class="order-item-image">
+                                        <img src="${item.image}" alt="${item.name}" onerror="this.src='e-commers/images/kurthi.jpg'">
+                                    </div>
+                                    <div class="order-item-details">
+                                        <div class="order-item-name">${item.name}</div>
+                                        <div class="order-item-price">₹${item.price.toFixed(2)} × ${item.qty}</div>
+                                    </div>
+                                `;
+                                orderItems.appendChild(itemElement);
+                            });
+                            
+                            // Display shipping address
+                            const address = order.shippingAddress;
+                            shippingAddress.innerHTML = `
+                                <p>${address.address}</p>
+                                <p>${address.city}, ${address.postalCode}</p>
+                                <p>${address.country}</p>
+                            `;
+                            
+                            // Show tracking result
+                            trackingResult.style.display = 'block';
+                        } else {
+                            // Show error message
+                            errorMessage.style.display = 'block';
+                            errorMessage.textContent = data.message || 'Order not found. Please check your order ID and email.';
+                            trackingResult.style.display = 'none';
+                        }
+                    } catch (error) {
+                        console.error('Tracking error:', error);
+                        errorMessage.style.display = 'block';
+                        errorMessage.textContent = 'An error occurred. Please try again later.';
+                        trackingResult.style.display = 'none';
+                    }
+                });
+            }
+        });
+        
+        // Helper function to get event description
+        function getEventDescription(status, order) {
+            switch (status) {
+                case 'placed':
+                    return 'Your order has been received and is being prepared.';
+                case 'processing':
+                    return 'Your order is being processed and prepared for shipping.';
+                case 'shipped':
+                    return `Your order has been shipped${order.trackingNumber ? ` with tracking number ${order.trackingNumber}` : ''}.`;
+                case 'out_for_delivery':
+                    return order.deliveryNotes || 'Your order is out for delivery and will arrive soon.';
+                case 'delivered':
+                    return 'Your order has been delivered successfully.';
+                default:
+                    return '';
+            }
+        }
+    </script>
+    <style>
+        .tracking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tracking-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .tracking-result {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .tracking-timeline {
+            position: relative;
+            margin: 30px 0;
+        }
+        .tracking-timeline:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            height: 100%;
+            width: 4px;
+            background: #ddd;
+        }
+        .tracking-event {
+            position: relative;
+            margin-bottom: 20px;
+            padding-left: 50px;
+        }
+        .tracking-event:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 16px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #007bff;
+        }
+        .tracking-event.active:before {
+            background: #28a745;
+        }
+        .tracking-event-date {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .tracking-event-title {
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .tracking-event-desc {
+            color: #6c757d;
+        }
+        .tracking-map {
+            height: 300px;
+            background-color: #f8f9fa;
+            margin-top: 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .order-details {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        .order-item {
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .order-item-image {
+            width: 80px;
+            height: 80px;
+            background-color: #f8f9fa;
+            margin-right: 15px;
+        }
+        .order-item-details {
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="main-layout">
+    <!-- loader  -->
+    <div class="loader_bg">
+        <div class="loader"><img src="images/loading.gif" alt="#" /></div>
+    </div>
+    <!-- end loader -->
+    <!-- header -->
+    <header>
+        <!-- header inner -->
+        <div class="header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                        <div class="full">
+                            <div class="center-desk">
+                                <div class="logo">
+                                    <a href="index.html"><img src="images/logo.png" alt="#" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                        <nav class="navigation navbar navbar-expand-md navbar-dark ">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarsExample04">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="index.html">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="about.html">About</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="products.html">Products</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="blog.html">Blog</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="contact.html">Contact Us</a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="track-order.html">Track Order</a>
+                                    </li>
+                                    <li class="nav-item d_none login_btn">
+                                        <a class="nav-link" href="#">Login</a>
+                                    </li>
+                                    <li class="nav-item d_none">
+                                        <a class="nav-link" href="#">Register</a>
+                                    </li>
+                                    <li class="nav-item d_none sea_icon">
+                                        <a class="nav-link" href="#"><i class="fa fa-shopping-bag" aria-hidden="true"></i><i class="fa fa-search" aria-hidden="true"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end header inner -->
+    <!-- end header -->
+
+    <!-- banner -->
+    <section class="banner_main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="titlepage">
+                        <h2>Track Your Order</h2>
+                        <p>Enter your order details to track your shipment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end banner -->
+
+    <!-- tracking section -->
+    <div class="tracking-container">
+        <div class="tracking-form">
+            <h4>Enter Order Details</h4>
+            <form id="trackingForm">
+                <div class="form-group">
+                    <label for="orderId">Order ID</label>
+                    <input type="text" class="form-control" id="orderId" placeholder="Enter your order ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter the email used for order" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Track Order</button>
+            </form>
+        </div>
+
+        <div class="tracking-result" id="trackingResult">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>Order Tracking Information</h4>
+                <span class="badge badge-primary" id="orderStatus">Processing</span>
+            </div>
+            <p>Order ID: <span id="displayOrderId"></span></p>
+            <p>Order Date: <span id="orderDate"></span></p>
+
+            <div class="tracking-timeline" id="trackingTimeline">
+                <!-- Timeline events will be added dynamically -->
+            </div>
+
+            <div class="tracking-map">
+                <p>Location tracking map will be displayed here</p>
+            </div>
+
+            <div class="order-details">
+                <h5>Order Items</h5>
+                <div id="orderItems">
+                    <!-- Order items will be added dynamically -->
+                </div>
+            </div>
+
+            <div class="shipping-address mt-4">
+                <h5>Shipping Address</h5>
+                <p id="shippingAddress"></p>
+            </div>
+        </div>
+    </div>
+    <!-- end tracking section -->
+
+    <!--  footer -->
+    <footer>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="footer_logo">
+                            <a href="index.html"><img src="images/logo.png" alt="#" /></a>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="address">
+                            <h3>Contact Us</h3>
+                            <p>Address: 73 Canal Street, New York, NY</p>
+                            <p>Phone: +01 1234567890</p>
+                            <p>Email: demo@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <ul class="lik">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="products.html">Products</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="contact.html">Contact us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="follow">
+                            <h3>Follow Us</h3>
+                            <ul class="social_icon">
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>© 2023 All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end footer -->
+
+    <!-- Javascript files-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <!-- sidebar -->
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trackingForm = document.getElementById('trackingForm');
+            const trackingResult = document.getElementById('trackingResult');
+            const trackingTimeline = document.getElementById('trackingTimeline');
+            const orderItems = document.getElementById('orderItems');
+            
+            trackingForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const orderId = document.getElementById('orderId').value;
+                const email = document.getElementById('email').value;
+                
+                try {
+                    // Show loading state
+                    document.querySelector('.loader_bg').style.display = 'block';
+                    
+                    // Call the tracking API
+                    const trackingData = await window.API.tracking.getOrderTracking(orderId, email);
+                    
+                    // Hide loading state
+                    document.querySelector('.loader_bg').style.display = 'none';
+                    
+                    // Display the tracking information
+                    displayTrackingInfo(trackingData);
+                    
+                    // Show the tracking result section
+                    trackingResult.style.display = 'block';
+                    
+                    // Scroll to the tracking result
+                    trackingResult.scrollIntoView({ behavior: 'smooth' });
+                } catch (error) {
+                    // Hide loading state
+                    document.querySelector('.loader_bg').style.display = 'none';
+                    
+                    alert('Error tracking order: ' + (error.message || 'Please check your order ID and email'));
+                    console.error('Tracking error:', error);
+                }
+            });
+            
+            function displayTrackingInfo(data) {
+                // Set basic order information
+                document.getElementById('displayOrderId').textContent = data.orderId;
+                document.getElementById('orderStatus').textContent = data.status;
+                document.getElementById('orderDate').textContent = new Date(data.createdAt).toLocaleDateString();
+                
+                // Set shipping address
+                const address = data.shippingAddress;
+                document.getElementById('shippingAddress').textContent = 
+                    `${address.address}, ${address.city}, ${address.postalCode}, ${address.country}`;
+                
+                // Update status badge color
+                const statusBadge = document.getElementById('orderStatus');
+                statusBadge.className = 'badge';
+                
+                switch(data.status) {
+                    case 'Processing':
+                        statusBadge.classList.add('badge-warning');
+                        break;
+                    case 'Shipped':
+                        statusBadge.classList.add('badge-info');
+                        break;
+                    case 'Out for Delivery':
+                        statusBadge.classList.add('badge-primary');
+                        break;
+                    case 'Delivered':
+                        statusBadge.classList.add('badge-success');
+                        break;
+                    case 'Cancelled':
+                        statusBadge.classList.add('badge-danger');
+                        break;
+                    default:
+                        statusBadge.classList.add('badge-secondary');
+                }
+                
+                // Clear previous timeline events
+                trackingTimeline.innerHTML = '';
+                
+                // Add order created event
+                const createdEvent = document.createElement('div');
+                createdEvent.className = 'tracking-event active';
+                createdEvent.innerHTML = `
+                    <div class="tracking-event-date">${new Date(data.createdAt).toLocaleString()}</div>
+                    <div class="tracking-event-title">Order Placed</div>
+                    <div class="tracking-event-desc">Your order has been placed successfully</div>
+                `;
+                trackingTimeline.appendChild(createdEvent);
+                
+                // Add tracking updates
+                if (data.trackingUpdates && data.trackingUpdates.length > 0) {
+                    data.trackingUpdates.forEach(update => {
+                        const updateEvent = document.createElement('div');
+                        updateEvent.className = 'tracking-event active';
+                        updateEvent.innerHTML = `
+                            <div class="tracking-event-date">${new Date(update.timestamp).toLocaleString()}</div>
+                            <div class="tracking-event-title">${update.status}</div>
+                            <div class="tracking-event-desc">
+                                ${update.location ? 'Location: ' + update.location : ''}
+                                ${update.comment ? '<br>' + update.comment : ''}
+                            </div>
+                        `;
+                        trackingTimeline.appendChild(updateEvent);
+                    });
+                }
+                
+                // Add future events based on current status
+                const allStatuses = ['Processing', 'Shipped', 'Out for Delivery', 'Delivered'];
+                const currentStatusIndex = allStatuses.indexOf(data.status);
+                
+                for (let i = currentStatusIndex + 1; i < allStatuses.length; i++) {
+                    const futureEvent = document.createElement('div');
+                    futureEvent.className = 'tracking-event';
+                    futureEvent.innerHTML = `
+                        <div class="tracking-event-title">${allStatuses[i]}</div>
+                        <div class="tracking-event-desc">Pending</div>
+                    `;
+                    trackingTimeline.appendChild(futureEvent);
+                }
+                
+                // Clear previous order items
+                orderItems.innerHTML = '';
+                
+                // Add order items
+                data.orderItems.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'order-item';
+                    itemElement.innerHTML = `
+                        <div class="order-item-image">
+                            <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="order-item-details">
+                            <h6>${item.name}</h6>
+                            <p>Quantity: ${item.qty}</p>
+                            <p>Price: $${item.price.toFixed(2)}</p>
+                        </div>
+                    `;
+                    orderItems.appendChild(itemElement);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
