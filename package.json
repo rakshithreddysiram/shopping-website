@@ -1,21 +1,21 @@
 {
-  "name": "firstproject",
+  "name": "web-dev",
   "version": "1.0.0",
-  "description": "this is my first web-dev project",
-  "main": "server.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "firstproject"
-  ],
-  "author": "rakshith",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srakshithreddy/shopping-website.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "dotenv": "^17.2.2",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "slugify": "^1.6.6"
-  }
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/srakshithreddy/shopping-website/issues"
+  },
+  "homepage": "https://github.com/srakshithreddy/shopping-website#readme"
 }
